@@ -1584,6 +1584,11 @@
   resolved "https://registry.yarnpkg.com/@napi-rs/triples/-/triples-1.0.3.tgz#76d6d0c3f4d16013c61e45dfca5ff1e6c31ae53c"
   integrity sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA==
 
+"@nestjs/bull@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/bull/-/bull-0.4.2.tgz#d6b76eaff626f5a3c34048bdc75b597753df059f"
+  integrity sha512-HYRMbgqoUIpGplXN8kaZ23E/yHn6TRrQ297ILRqaHTxBp4vO+XNLfL1qUmJ4Z6weufsNKGg0xcX4dSC5AhXV9g==
+
 "@nestjs/common@^7.0.0":
   version "7.6.18"
   resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-7.6.18.tgz#d89e6d248985eec13af60507a8725cb2142d660a"
@@ -3788,7 +3793,7 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
-bull@^4.1.0:
+bull@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/bull/-/bull-4.1.1.tgz#57fa7f9caa9ed74cd3fddc2301559d35f616bcef"
   integrity sha512-EDkS3+QZyzHjC2gPThAlEwklIJSt2520nT6drpGfs5UlmVZnkTuA1unawUNLWjfN2lnwOJmstZ0t3/Rg/cRe8Q==
