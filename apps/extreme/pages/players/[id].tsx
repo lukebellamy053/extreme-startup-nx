@@ -1,54 +1,31 @@
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import React, { useEffect, useMemo } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
-import CurrentScoreBarChart from '../../components/CurrentScoreBarChart';
+import React from 'react';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import { getPlayers, getRound, getScores } from '../api/redis';
+import { UserTable } from '../../components/UserTable';
+import { useAutoRefresh } from '../../hooks/useAutoRefresh';
 
 
-export const ViewPlayerScreen = ({ players, round }) => {
-  const router = useRouter();
+export const ViewPlayerScreen = ({ user, round }) => {
 
-  const stopServer = () => {
-    axios.delete('/api/server').then(() => reloadPage());
-  };
-
-  const reloadPage = useMemo(() => () => router.replace(router.asPath), [router]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      reloadPage();
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [reloadPage]);
+  useAutoRefresh();
 
   return <>
-    <Typography variant='h4'>Running Server</Typography>
-    <Typography variant='body1' color='text.secondary'>The game has begun</Typography>
+    <Typography variant='h4'>{user.name}</Typography>
+    <Typography variant='body1' color='text.secondary'>score: {user.score}</Typography>
     <Box mt={2}>
-      <Button onClick={() => stopServer()}>Stop</Button>
-    </Box>
-    <Box mt={2}>
-      <Typography variant='h6'>Players - {players.length}</Typography>
-    </Box>
-    <Box mt={2}>
-      <Typography variant='h6'>Round - {round}</Typography>
-    </Box>
-    <Box mt={2}>
-      <Typography variant='h6'>Top Scorers</Typography>
-    </Box>
-    <Grid container>
-      <Grid item sm={12} lg={4}>
-        <Box mt={2} height={400}>
-          {round > 0 && <CurrentScoreBarChart players={players} />}
-        </Box>
+      <Grid container direction='row' justifyContent='center'
+            alignItems='center'>
+        <Grid item sm={12} lg={10}>
+          <Divider />
+          <UserTable user={user} />
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   </>;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const round = await getRound();
   if (round == null) {
     return {
@@ -61,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const [players, scores] = await Promise.all([getPlayers(), getScores()]);
   return {
     props: {
-      players,
+      user: players.find(x => x.name === params.id),
       round,
       scores
     }

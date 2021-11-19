@@ -1,4 +1,5 @@
 import { createClient } from 'redis';
+import { IPlayer, PlayerMap } from '@extreme-startup/common';
 
 export const RedisClient = createClient(process.env.REDIS_HOST as string);
 
@@ -15,7 +16,7 @@ const RedisGetJSON = (key: string) => RedisGet(key).then(data => data ? JSON.par
 
 export const getScores = () => RedisGetJSON('players:scores');
 
-export const getPlayers = () => RedisGetJSON('players').then(players => {
+export const getPlayers: () => Promise<IPlayer[]> = () => RedisGetJSON('players').then(players => {
   return Object.values(players ?? {});
 });
 

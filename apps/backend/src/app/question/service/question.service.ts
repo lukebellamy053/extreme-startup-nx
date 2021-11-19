@@ -37,11 +37,21 @@ export class QuestionService {
     }).then(data => data.data).then(result => {
       const correctAnswer = `${result}` === question.answer;
       console.log(JSON.stringify({ player: player.name, event: correctAnswer ? 'Correct' : 'Incorrect' }));
-      player.score += correctAnswer ? questionCorrectScore : questionWrongScore;
+      const reward = correctAnswer ? questionCorrectScore : questionWrongScore;
+      player.score += reward;
+      if (!player.history) {
+        player.history = [];
+      }
+      player.history.push({ ...question, received: result, awarded: reward });
       return player;
     }).catch(() => {
       console.log({ player: player.name, event: 'Server Down' });
       player.score += serverDownPenalty;
+      if (!player.history) {
+        player.history = [];
+      }
+      player.history.push({ ...question, received: '--Server Down--', awarded: serverDownPenalty });
+
       return player;
     });
   }

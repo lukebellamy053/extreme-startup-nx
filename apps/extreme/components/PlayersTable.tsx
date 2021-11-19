@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { IPlayer, IQuestion, PlayerMap } from '@extreme-startup/common';
+import { PlayerMap } from '@extreme-startup/common';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,11 +10,11 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 type Props = {
-  user: IPlayer
+  users: PlayerMap
 }
 
 interface Column {
-  id: keyof IQuestion;
+  id: 'name' | 'host' | 'score';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -22,12 +22,11 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'question', label: 'Question', minWidth: 170 },
-  { id: 'answer', label: 'Expected Answer', minWidth: 100 },
-  { id: 'received', label: 'Your Answer', minWidth: 100 },
+  { id: 'name', label: 'Name', minWidth: 170 },
+  { id: 'host', label: 'Hostname', minWidth: 100 },
   {
-    id: 'awarded',
-    label: 'Award',
+    id: 'score',
+    label: 'Score',
     minWidth: 170,
     align: 'right'
   }
@@ -39,14 +38,14 @@ interface Data {
   score: number;
 }
 
-export const UserTable: FC<Props> = ({ user }) => {
+export const PlayersTable: FC<Props> = ({ users }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    setRows(user?.history ?? []);
-  }, [user]);
+    setRows(Object.values(users));
+  }, [users]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

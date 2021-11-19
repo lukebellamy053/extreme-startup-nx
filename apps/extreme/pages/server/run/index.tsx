@@ -1,29 +1,20 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import CurrentScoreBarChart from '../../../components/CurrentScoreBarChart';
 import { ScoreHistory } from '../../../components/ScoreHistory';
 import { getPlayers, getRound, getScores } from '../../api/redis';
-import { UserTable } from '../../../components/UserTable';
+import { PlayersTable } from '../../../components/PlayersTable';
+import { useAutoRefresh } from '../../../hooks/useAutoRefresh';
 
 export const RunServerPage = ({ players, round, scores }) => {
 
-  const router = useRouter();
+  const { reloadPage } = useAutoRefresh();
 
   const stopServer = () => {
     axios.delete('/api/server').then(() => reloadPage());
   };
-
-  const reloadPage = useMemo(() => () => router.replace(router.asPath), [router]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace(router.asPath);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [reloadPage]);
 
   return <>
     <Typography variant='h4'>Running Server</Typography>
@@ -38,7 +29,7 @@ export const RunServerPage = ({ players, round, scores }) => {
         <Grid item sm={12} lg={10}>
           <Typography variant='h6'>Players - {players.length}</Typography>
           <Divider />
-          <UserTable users={players} />
+          <PlayersTable users={players} />
         </Grid>
       </Grid>
     </Box>
