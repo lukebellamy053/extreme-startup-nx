@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
+    "start": "concurrently \"nx build extreme && cd dist/apps/extreme && nest start\" \"nx serve backend\" -k",
     "build": "nx build",
     "test": "nx test"
   },
@@ -17,7 +17,6 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
-    "@nrwl/nest": "^13.1.4",
     "@nrwl/next": "13.1.4",
     "@types/bull": "^3.15.5",
     "@types/redis": "^2.8.32",
@@ -38,7 +37,8 @@
     "sass": "^1.43.4",
     "ts-node": "^10.4.0",
     "tslib": "^2.0.0",
-    "tss-react": "^2.0.1"
+    "tss-react": "^2.0.1",
+    "concurrently": "^6.4.0"
   },
   "devDependencies": {
     "@nestjs/schematics": "^7.0.0",
