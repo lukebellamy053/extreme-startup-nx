@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { RedisService } from '../../redis/service/redis.service';
-import { IPlayer, PlayerMap } from '../types/IPlayer';
+import { IPlayer, PlayerMap } from '@extreme-startup/common';
 
 @Injectable()
 export class PlayerService {

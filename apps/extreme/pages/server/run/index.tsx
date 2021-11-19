@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import CurrentScoreBarChart from '../../../components/CurrentScoreBarChart';
 import { ScoreHistory } from '../../../components/ScoreHistory';
 import { getPlayers, getRound, getScores } from '../../api/redis';
+import { UserTable } from '../../../components/UserTable';
 
 export const RunServerPage = ({ players, round, scores }) => {
 
@@ -31,7 +32,15 @@ export const RunServerPage = ({ players, round, scores }) => {
       <Button onClick={() => stopServer()}>Stop</Button>
     </Box>
     <Box mt={2}>
-      <Typography variant='h6'>Players - {players.length}</Typography>
+
+      <Grid container direction='row' justifyContent='center'
+            alignItems='center'>
+        <Grid item sm={12} lg={10}>
+          <Typography variant='h6'>Players - {players.length}</Typography>
+          <Divider />
+          <UserTable users={players} />
+        </Grid>
+      </Grid>
     </Box>
     <Box mt={2}>
       <Typography variant='h6'>Round - {round}</Typography>

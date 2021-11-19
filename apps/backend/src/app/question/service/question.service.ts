@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { QuestionFactory } from './question.factory';
-import { IPlayer } from '../../player/types/IPlayer';
 import axios from 'axios';
 import { IQuestion } from '../types/IQuestion';
+import { IPlayer } from '@extreme-startup/common';
 
 const { SCORE, PENALTY } = process.env;
 

@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "backend": "apps/backend",
+    "common": "libs/common",
     "extreme": "apps/extreme",
     "extreme-e2e": "apps/extreme-e2e"
   }

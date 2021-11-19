@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
 import { PlayerService } from '../service/player.service';
-import { IPlayer } from '../types/IPlayer';
+import { IPlayer } from '@extreme-startup/common';
 
 @Controller('/player')
 export class PlayerController {
