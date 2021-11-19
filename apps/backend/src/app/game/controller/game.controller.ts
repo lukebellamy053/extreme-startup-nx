@@ -1,7 +1,7 @@
 import { Controller, Delete, Inject, Post } from '@nestjs/common';
 import { GameService } from '../service/game.service';
 
-@Controller()
+@Controller('/game')
 export class GameController {
 
   @Inject() gameService: GameService;

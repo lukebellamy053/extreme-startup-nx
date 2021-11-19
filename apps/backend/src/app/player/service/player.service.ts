@@ -19,7 +19,7 @@ export class PlayerService {
   }
 
   async updatePlayers(players: IPlayer[]) {
-    this.log.debug('Updating players')
+    this.log.debug('Updating players');
     const newPlayerMap = players.reduce((playerMap, player) => {
       playerMap[player.name] = player;
       return playerMap;
@@ -30,6 +30,22 @@ export class PlayerService {
 
   async getPlayers(): Promise<PlayerMap> {
     return this.redisService.getJSON(this.PLAYERS_KEY);
+  }
+
+  async addPlayer(player: IPlayer) {
+    const players = await this.getPlayers();
+    players[player.name] = { ...player, score: 0 };
+    await this.savePlayers(players);
+  }
+
+  async removePlayer(name: string) {
+    const players = await this.getPlayers();
+    delete players[name];
+    await this.savePlayers(players);
+  }
+
+  getScores() {
+    return this.redisService.getJSON(this.PLAYERS_SCORES_KEY);
   }
 
   private async recordCurrentScores(players: PlayerMap) {

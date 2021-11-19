@@ -7,8 +7,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ListItemText from "@mui/material/ListItemText";
-import {getPlayers} from "../../server/Player";
 import {useRouter} from "next/router";
+import { getPlayers, getRound } from '../api/redis';
 
 export const ServerPage = ({players}) => {
 
@@ -26,10 +26,6 @@ export const ServerPage = ({players}) => {
         return () => router.replace(router.asPath);
     }, [router]);
 
-    const startGame = useMemo(() => {
-        return () => axios.post("/api/server").then(() => router.push('/server/run'));
-    }, [router]);
-
     useEffect(() => {
         const interval = setInterval(() => {
             reloadPlayers();
@@ -45,9 +41,6 @@ export const ServerPage = ({players}) => {
             server</Typography>
         <Box mt={2}>
             <NewServerForm onSubmit={onSubmit}/>
-        </Box>
-        <Box mt={2}>
-            <Button onClick={() => startGame()}>Start Game</Button>
         </Box>
         <Box mt={2}>
             <Divider/>
@@ -76,6 +69,15 @@ export const ServerPage = ({players}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const round = await getRound();
+  if (round != null) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/server/run'
+      }
+    };
+  }
     return {
         props: {
             players: await getPlayers()
