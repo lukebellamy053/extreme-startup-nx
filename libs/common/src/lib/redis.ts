@@ -28,13 +28,17 @@ export const RedisCommand = (command: string) => new Promise((resolve, reject) =
 export const RedisSaveJSON = (key: string, value: any) => RedisSave(key, JSON.stringify(value));
 
 export const getPlayers = () => RedisGetJSON('players').then(players => {
-  return Object.values(players ?? {});
+  return Object.values(players ?? {}) as IPlayer[];
 });
 
 export const newPlayer = async (player: IPlayer) => {
-  const players = await getPlayers();
-  players[player.name] = { host: player.host, name: player.name, score: 0, history: [] };
-  await RedisSaveJSON('players', players);
+  const players: IPlayer[]  = await getPlayers();
+  players.push({ host: player.host, name: player.name, score: 0, history: [] });
+  const playerMap = players.reduce((map, _player) => {
+    map[_player.name] = _player;
+    return map;
+  }, {});
+  await RedisSaveJSON('players', playerMap);
   return players[player.name];
 };
 
