@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"nx build extreme && cd dist/apps/extreme && nest start\" \"nx serve backend\" -k",
+    "start": "concurrently \"nx serve extreme\" \"nx serve backend\" -k",
     "build": "nx build",
     "test": "nx test"
   },

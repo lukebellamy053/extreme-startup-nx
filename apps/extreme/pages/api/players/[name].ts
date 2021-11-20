@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { BackendApi } from '../../../lib/BackendApi';
+import { removePlayer } from '@extreme-startup/common';
 
 
 export default async function handler(
@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'DELETE':
-      await BackendApi.removePlayer(req.query.name as string);
+      await removePlayer(req.query.name as string);
       res.status(200).send('');
       break;
     default:
