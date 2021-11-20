@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   switch (req.method) {
     case 'DELETE':
-      await removePlayer(req.query.name as string);
+      await removePlayer(decodeURIComponent(req.query.name as string));
       res.status(200).send('');
       break;
     default:
