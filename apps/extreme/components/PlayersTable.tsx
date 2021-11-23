@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Link from 'next/link';
 
 type Props = {
   users: PlayerMap
@@ -79,16 +80,17 @@ export const PlayersTable: FC<Props> = ({ users }) => {
             .map((row) => {
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={row.name}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
-                  })}
+                  <TableCell>
+                    <Link href={'/players/' + row.name}>
+                      {row.name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {row.host}
+                  </TableCell>
+                  <TableCell align={'right'}>
+                    {row.score}
+                  </TableCell>
                 </TableRow>
               );
             })}
