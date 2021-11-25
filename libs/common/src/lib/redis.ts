@@ -21,7 +21,7 @@ export const RedisSave = (key: string, value: string) => new Promise<string | nu
 
 export const RedisSaveJSON = (key: string, value: any) => RedisSave(key, JSON.stringify(value));
 
-export const getPlayers = () => RedisGetJSON('players');
+export const getPlayers = () => RedisGetJSON('players').then(data => data ?? {});
 
 export const getPlayersArray = () => RedisGetJSON('players').then(players => {
   return Object.values(players ?? {}) as IPlayer[];

@@ -24,8 +24,10 @@ export class PlayerService {
       playerMap[player.name] = player;
       return playerMap;
     }, {});
+    console.log('Updating players');
     await this.savePlayers(newPlayerMap);
     await this.recordCurrentScores(newPlayerMap);
+    this.log.log('Updated player scores');
   }
 
   async getPlayers(): Promise<PlayerMap> {
@@ -55,7 +57,8 @@ export class PlayerService {
       date: Date.now(),
       players
     });
-    await this.redisService.saveJSON(this.PLAYERS_SCORES_KEY, newScore);
+    const lastFewScores = newScore.splice(-20);
+    await this.redisService.saveJSON(this.PLAYERS_SCORES_KEY, lastFewScores);
   }
 
   private removePlayerScores() {

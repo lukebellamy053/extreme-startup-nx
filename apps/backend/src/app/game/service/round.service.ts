@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RedisService } from '../../redis/service/redis.service';
+import { Questions } from '../../question/consts/questions';
 
 
 @Injectable()
@@ -23,6 +24,10 @@ export class RoundService {
 
   async nextRound() {
     let round = await this.loadCurrentRound();
+    if(round - 1 === Questions.length) {
+      console.log("Max round reached")
+      return;
+    }
     round++;
     await this.redisService.save(this.CURRENT_ROUND_KEY, `${round}`);
   }

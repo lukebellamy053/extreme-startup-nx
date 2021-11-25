@@ -14,8 +14,8 @@ export const ScoreHistory: FC<Props> = ({scores}) => {
             if(!scores) {
                 return [] as UserSerie<MyDatum>[];
             }
-            let playerScoresMap = scores.reduce((scoreMap, scoreSet) => {
-                for(let player of Object.values(scoreSet.players)) {
+            const playerScoresMap = scores.reduce((scoreMap, scoreSet) => {
+                for(const player of Object.values(scoreSet.players)) {
                     if (!scoreMap[player.name]) {
                         scoreMap[player.name] = {
                             label: player.name,
