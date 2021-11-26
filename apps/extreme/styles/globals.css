@@ -9,3 +9,7 @@ body {
 .tickLabel {
     fill: white !important;
 }
+
+a {
+  color: #2c90e3
+}
